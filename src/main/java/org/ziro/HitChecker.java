@@ -1,7 +1,6 @@
 package org.ziro;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class HitChecker {
 
@@ -13,15 +12,14 @@ public class HitChecker {
             }
         }
 
-        // 2. Треугольник (II четверть)
+
         if (x <= 0 && y >= 0) {
-            // Прямая: y = x + R → точка под ней: y <= x + R
+
             if (y <= x + r) {
                 return true;
             }
         }
 
-        // 3. Прямоугольник (III/IV, но только y <= 0)
         if (x >= -r && x <= 0 && y >= -r / 2.0 && y <= 0) {
             return true;
         }

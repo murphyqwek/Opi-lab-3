@@ -1,0 +1,102 @@
+include params.ninja
+
+rule compile
+    command = mkdir -p $build_dir && $
+              find $src_dir -name "*.java" > sources.txt && $
+              $javac -cp "$cp" -d $build_dir @sources.txt && $
+              touch $build_dir/.compiled && rm sources.txt
+
+rule jar
+    command = mkdir -p $dist_dir && $
+              echo "Manifest-Version: 1.0" > manifest.tmp && $
+              echo "Main-Class: $main_class" >> manifest.tmp && $
+              echo "Implementation-Version: $version" >> manifest.tmp && $
+              $jar cmf manifest.tmp $out -C $build_dir . -C $res_dir . && $
+              rm manifest.tmp
+
+rule clean
+    command = rm -rf $target_dir *.tmp *.stamp *.xml *.patch javadoc/
+
+rule test
+    command = mkdir -p $test_build_dir && $
+              find $test_src_dir -name "*.java" > test_sources.txt && $
+              $javac -cp "$cp" -d $test_build_dir @test_sources.txt && $
+              $java -cp "$test_cp" $test_runner && $
+              touch $test_build_dir/.tested && rm test_sources.txt
+
+rule xml
+    command = find . -name "*.xml" -exec xmllint --noout {} +
+
+rule native2ascii
+    command = native2ascii -encoding UTF-8 $in $out
+
+rule music
+    command = powershell.exe -c "(New-Object Media.SoundPlayer './success.wav').PlaySync()" || echo "Music played"
+
+rule scp
+    command = scp $in $remote_host:$remote_path
+
+rule doc
+    command = mkdir -p $target_dir/javadoc && $
+              javadoc -classpath "$cp" -d $target_dir/javadoc -sourcepath $src_dir -subpackages $base_package && $
+              md5sum $in | awk '{print "MD5-Hash: " $$1}' > hash.tmp && $
+              sha1sum $in | awk '{print "SHA1-Hash: " $$1}' >> hash.tmp && $
+              $jar umf hash.tmp $in && $
+              $jar uf $in -C $target_dir/javadoc . && $
+              rm hash.tmp
+
+rule history
+    command = bash scripts/history.sh
+
+rule team
+    command = bash scripts/team.sh
+
+rule report
+    command = bash scripts/report.sh "$test_cp" "$test_runner"
+
+rule env
+    command = $alt_java_home/bin/java $alt_jvm_args -cp $in $main_class
+
+rule alt
+    command = sed -i "s/$old_var/$new_var/g" $src_dir/org/ziro/beans/CollectionBean.java && ninja build
+
+rule diff
+    command = bash scripts/diff_check.sh
+
+
+
+build $build_dir/.compiled: compile
+build compile: phony $build_dir/.compiled
+
+build $dist_dir/$project_name.jar: jar | compile
+build build: phony $dist_dir/$project_name.jar
+
+build clean: clean
+
+build $test_build_dir/.tested: test | build
+build test: phony $test_build_dir/.tested
+
+build xml: xml
+
+build $res_dir/message_ascii.properties: native2ascii $res_dir/message.properties
+build native2ascii: phony $res_dir/message_ascii.properties
+
+build music: music | build
+
+build scp: scp $dist_dir/$project_name.jar | build
+
+build doc: doc $dist_dir/$project_name.jar
+
+build history: history
+
+build team: team | build
+
+build report: report | test
+
+build env: env $dist_dir/$project_name.jar
+
+build alt: alt
+
+build diff: diff
+
+default build

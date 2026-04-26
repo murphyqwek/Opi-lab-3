@@ -42,12 +42,10 @@ public class Point {
     public double getY() {
         return y;
     }
-
     public double getR() {
         return r;
     }
 
-    // Для boolean — isHit()
     public boolean isHit() {
         return hit;
     }

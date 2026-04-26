@@ -10,6 +10,7 @@
     <h:outputStylesheet library="css" name="main.css"/>
 </h:head>
 <h:body style="background-image: url(#{resource['img/sticker.gif']}); background-attachment: fixed;">
+    <f:loadBundle basename="message" var="msg"/>
     <h:link outcome="index" styleClass="home-link" value="На главную" />
     <div class='container'>
         <div class="graph">
@@ -39,7 +40,7 @@
                         </div>
 
                         <p:commandButton id="submitButton"
-                                         value="Отправить"
+                                         value="#{msg.send}"
                                          process="@form"
                                          action="#{collectionBean.processRequest}"
                                          update=":resultsWrapper"
@@ -47,7 +48,7 @@
                                          style="margin-top: 10px;" />
 
                         <p:commandButton id="clearButton"
-                                         value="Очистить таблицу"
+                                         value="#{msg.clear}"
                                          action="#{collectionBean.clearDataBase}"
                                          update=":resultsWrapper"
                                          style="margin-top: 10px; margin-left: 10px;" />
@@ -58,7 +59,7 @@
 
         <h:panelGroup id="resultsWrapper" layout="block">
         <div id="results">
-            <h3>Результаты:</h3>
+            <h3>#{msg.result}</h3>
             <div class="table-wrapper">
                 <table id="results-table">
                     <thead>
