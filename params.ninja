@@ -1,5 +1,5 @@
 # --- PROJECT SETTINGS ---
-project_name = opi-lab-app
+project_name = opi-lab-app3
 version = 1.0.1
 # Укажите ваш основной класс или ManagedBean для манифеста
 main_class = org.ziro.Point

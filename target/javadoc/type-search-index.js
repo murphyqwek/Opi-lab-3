@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"org.ziro.beans","l":"CollectionBean"},{"p":"org.ziro.beans","l":"DataBean"},{"p":"org.ziro","l":"HitChecker"},{"p":"org.ziro","l":"Point"}];updateSearchResults();

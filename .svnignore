@@ -1,0 +1,13 @@
+target
+.git
+.idea
+.ninja_log
+*.tmp
+*.stamp
+sources.txt
+test_sources.txt
+report.xml
+*.patch
+manifest.tmp
+hash.tmp
+manifest_addon.txt
