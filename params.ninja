@@ -1,12 +1,8 @@
-# --- PROJECT SETTINGS ---
 project_name = opi-lab-app3
 version = 1.0.1
-# Укажите ваш основной класс или ManagedBean для манифеста
 main_class = org.ziro.Point
-# Базовый пакет для генерации Javadoc
 base_package = org
 
-# --- PATHS ---
 src_dir = src/main/java
 res_dir = src/main/resources
 test_src_dir = src/test/java
@@ -15,8 +11,6 @@ build_dir = target/classes
 test_build_dir = target/test-classes
 dist_dir = target/dist
 
-# --- TOOLS & CLASSPATH ---
-# Разделитель для Linux/WSL - двоеточие (:)
 cp = lib/*:target/classes
 test_cp = lib/*:target/classes:target/test-classes
 javac = javac
@@ -24,7 +18,6 @@ java = java
 jar = jar
 test_runner = org.junit.runner.JUnitCore org.ziro.HitCheckerTest
 
-# --- REMOTE & ENV ---
 remote_host = root@37.252.4.63
 remote_path = /root/lab
 alt_java_home = /usr/lib/jvm/java-17-openjdk-amd64
@@ -32,11 +25,5 @@ alt_jvm_args = -Xms512m -Xmx1G
 
 native2ascii = /usr/lib/jvm/java-8-openjdk-amd64/bin/native2ascii
 
-# --- ALT TARGET REPLACEMENTS ---
-old_var = OldVariableName
-new_var = NewVariableName
-
-# --- DIFF TARGET SETTINGS ---
-# Классы, изменения в которых блокируют коммит
 sensitive_classes = HitChecker.java DataBean.java
 
